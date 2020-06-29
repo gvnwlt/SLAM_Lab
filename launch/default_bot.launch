@@ -1,0 +1,69 @@
+<launch>
+    <!-- Settings -->
+    <arg name="rviz" default="true" /> 
+    <arg name="slam" default="true" /> 
+    <arg name="slam_methods" default="gmapping" doc="slam type [gmapping, cartographer, hector, karto, frontier_exploration]"/>
+    <arg name="use_map" default="false" />
+    <arg name="use_navigation" default="false" />
+
+    <!-- Simulator -->
+    <group> 
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <!-- <arg name="world_name" value="$(find simulator)/world/empty_world.world"/> -->
+        </include>
+        
+        <param name="robot_description" textfile="$(find simulator)/urdf/custom_bot.urdf" />
+        <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+                <param name ="publish_frequency" type=" double" value="50.0"/>
+        </node>
+
+        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model custom_bot" />
+    </group>
+
+    <!-- RVIZ -->
+    <group if="$(arg rviz)">
+        <node pkg="rviz" type="rviz" name="rviz_sim" args="-d $(env HOME)/.rviz/sim.rviz" />
+    </group>
+
+    <!-- Controller -->
+    <include file="$(find teleop_twist_joy)/launch/teleop.launch"/>
+
+     <!-- SLAM -->
+    <group if="$(arg slam)">
+        <!-- Slam Node running for creating map (also launches a robot_state_publisher) -->
+        <!-- <include file="$(find turtlebot3_slam)/launch/turtlebot3_slam.launch">
+            <arg name="slam_methods" value="$(arg slam_methods)"/> 
+        </include>  -->
+        <node name="gslam" type="slam_gmapping" pkg="gmapping"/> 
+    </group> 
+
+    <!-- Mapping -->
+    <group if="$(arg use_map)">
+        <!-- using the map we saved earlier -->
+        <arg name="map_file" value="$(find simulator)/map/map.yaml"/>
+        
+        <!-- Map_server package is used to handle mapp we saved -->
+        <node pkg="map_server" type="map_server" name="map_server" args="$(arg map_file)"/>
+
+        <!-- Adaptive monto carlo node running -->
+        <include file="$(find turtlebot3_navigation)/launch/amcl.launch"/>
+    </group>
+
+    <!-- Navigation -->
+    <group if="$(arg use_navigation)">
+        Setting up the MOVEBASE node and costmaps parameters
+        <node pkg="move_base" type="move_base" name="move_base" respawn="false" output="screen" >
+            <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS"/>
+            <rosparam file="$(find turtlebot3_navigation)/param/costmap_common_params_waffle_pi.yaml" command="load" ns="global_costmap" />
+            <rosparam file="$(find turtlebot3_navigation)/param/costmap_common_params_waffle_pi.yaml" command="load" ns="local_costmap" />
+            <rosparam file="$(find turtlebot3_navigation)/param/local_costmap_params.yaml" command="load"/>
+            <rosparam file="$(find turtlebot3_navigation)/param/global_costmap_params.yaml" command="load"/>
+            <rosparam file="$(find turtlebot3_navigation)/param/move_base_params.yaml" command="load"/>
+            <rosparam file="$(find turtlebot3_navigation)/param/dwa_local_planner_params_waffle_pi.yaml" command="load"/>
+            <remap from="cmd_vel" to="/cmd_vel"/>
+            <remap from="odom" to="odom"/>
+            <param name="DWAPlannerROS/min_vel_x" value="0.0" if ="false"/>
+        </node> 
+    </group> 
+
+</launch>
