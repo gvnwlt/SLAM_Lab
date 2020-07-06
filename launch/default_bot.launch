@@ -34,7 +34,9 @@
         <!-- <include file="$(find turtlebot3_slam)/launch/turtlebot3_slam.launch">
             <arg name="slam_methods" value="$(arg slam_methods)"/> 
         </include>  -->
-        <node name="gslam" type="slam_gmapping" pkg="gmapping"/> 
+        <!-- <node name="gslam" type="slam_gmapping" pkg="gmapping" />  -->
+        <!-- <include file="$(find cartographer_ros)/launch/test_cartographer_2d.launch" /> -->
+        <!-- <include file="$(find cartographer_ros)/launch/test_cartographer_3d.launch" /> -->
     </group> 
 
     <!-- Mapping -->
