@@ -5,5 +5,6 @@
 ### Added
    
 ### Changed
- 
+- Changed name of the repo from ros_simulator -> SLAM_Lab
+
 ### Fixed
