@@ -5,6 +5,7 @@
 ### Added
 - Added SLAM launch files to run for installed SLAM packages (instead of maintaing SLAM packages in this repo the user/developer can rely on the ROS repo for these packages to get the latest versions)
 - Added SLAM package install script that use the apt/ROS repo to install the necessary dependencies  
+- Added Karto SLAM launch 
 
 ### Changed
 
