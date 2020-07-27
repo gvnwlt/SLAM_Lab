@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>janky_simulator</name>
-  <version>0.0.1</version>
-  <description>The simulator package</description>
+  <name>slam_packages</name>
+  <version>0.0.0</version>
+  <description>Pacakges for SLAM</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->

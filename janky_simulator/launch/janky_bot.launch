@@ -1,8 +1,8 @@
 <launch>
     <!-- Settings -->
     <arg name="rviz" default="true" /> 
-    <arg name="slam" default="false" /> 
-    <arg name="slam_method" default="rtabmap" doc="slam type [gmapping, cartographer, hector, karto, frontier_exploration, rtabmap, slam_toolbox]"/>
+    <arg name="slam" default="true" /> 
+    <arg name="slam_method" default="slam_toolbox" doc="slam type [gmapping, cartographer, hector, karto, frontier_exploration, rtabmap, slam_toolbox]"/>
     <arg name="use_map" default="false" />
     <arg name="use_navigation" default="false" />
 
@@ -37,16 +37,20 @@
         <!-- gslam -->
         <node name="gslam" type="slam_gmapping" pkg="gmapping" if="$(eval slam_method == 'gmapping')"/> 
         <!-- cartographer -->
-        <include file="$(find cartographer_ros)/launch/test_cartographer_2d.launch" if="$(eval slam_method == 'cartographer')"/>
+        <include file="$(find slam_packages)/launch/test_cartographer_2d.launch" if="$(eval slam_method == 'cartographer')"/>
 
         <!-- <include file="$(find cartographer_ros)/launch/test_cartographer_3d.launch" if="$(eval slam_method) == 'cartographer'"/>/> -->
 
         <!-- hector slam -->
         <!-- having issues launching this with all other nodes in the script, so may have to launch separately for now -->
-        <include file="$(find hector_slam_launch)/launch/hector_ugv.launch" if="$(eval slam_method == 'hector')"/>
+        <include file="$(find slam_packages)/launch/hector_ugv.launch" if="$(eval slam_method == 'hector')"/>
 
         <!-- rtabmap -->
-        <include file="$(find rtabmap_ros)/launch/rtabmapping.launch" if="$(eval slam_method == 'rtabmap')"/>
+        <include file="$(find slam_packages)/launch/rtabmapping.launch" if="$(eval slam_method == 'rtabmap')"/>
+
+        <!-- slam_toolbox -->
+        <include file="$(find slam_packages)/launch/slam_toolbox_offline.launch" if="$(eval slam_method == 'slam_toolbox')"/>
+
     </group> 
 
     <!-- Mapping -->
