@@ -2,7 +2,7 @@
     <!-- Settings -->
     <arg name="rviz" default="true" /> 
     <arg name="slam" default="true" /> 
-    <arg name="slam_method" default="slam_toolbox" doc="slam type [gmapping, cartographer, hector, karto, frontier_exploration, rtabmap, slam_toolbox]"/>
+    <arg name="slam_method" default="cartographer" doc="slam type [gmapping, cartographer, hector, karto, frontier_exploration, rtabmap, slam_toolbox]"/>
     <arg name="use_map" default="false" />
     <arg name="use_navigation" default="false" />
 

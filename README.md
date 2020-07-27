@@ -17,3 +17,4 @@ $ rosrun slam_packages install_slam_packages.sh
 ### Updates
 * Added gmapping, cartographer, rtabmap, hector-slam [2020-07-24]
 * Added launches for 'slam_toolbox' [2020-07-26]
+* Changed lua for Cartographer 2D [2020-07-26]

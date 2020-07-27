@@ -9,6 +9,10 @@
 ### Changed
 
 ### Fixed
+- Fixed Cartographer 2D launch (issue with 'pose_extrapolator' being used more than once)
+
+### Issues 
+- Hector SLAM not not launching consistently (have to launch this after gazebo and rviz launch for now...)
 
 ## [0.0.1] - 2020-07-25
 
