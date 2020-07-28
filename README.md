@@ -21,4 +21,4 @@ $ rosrun slam_packages install_slam_packages.sh
 * Added Karto launch [2020-07-26]
 
 ### Working On 
-* Implementing LIO-SAM  
+* Implementing mrpt-slam  
